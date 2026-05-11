@@ -22,6 +22,7 @@ export default function Contact() {
           <p className="text-gray-600 max-w-xl mx-auto">
             We'd love to hear from you. Whether you have a question about our products, custom orders, or just want to say hello.
           </p>
+          <h1>(CUSTOMIZATIONS ARE ALSO AVAILABLE )</h1>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -63,7 +64,7 @@ export default function Contact() {
               <Camera className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-1">Instagram</h3>
-            <p className="text-sm text-gray-500">@evascrochet</p>
+            <p className="text-sm text-gray-500">@hello.eva.crochet</p>
           </motion.a>
 
           <motion.div 
