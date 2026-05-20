@@ -253,13 +253,13 @@ console.log("PRODUCT ID:", product_id);
               />
 
               <input
-                placeholder="Phone"
+                placeholder="Phone Number"
                 className="w-full mb-3 p-3 border rounded-xl"
                 onChange={(e) => setPhone(e.target.value)}
               />
 
               <textarea
-                placeholder="Address"
+                placeholder="Enter Full Address with PIN code"
                 className="w-full p-3 border rounded-xl"
                 onChange={(e) => setAddress(e.target.value)}
               />
