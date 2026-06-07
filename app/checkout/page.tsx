@@ -82,6 +82,8 @@ export default function Checkout() {
 
         // 🔥 PAYMENT SUCCESS
         handler: async function (response: any) {
+          
+          console.log("RAZORPAY RESPONSE:", response);
 
           // ✅ VERIFY PAYMENT WITH BACKEND
           const verifyRes = await fetch(
@@ -113,10 +115,25 @@ export default function Checkout() {
             return;
           }
 
+          console.log("PAYMENT VERIFIED");
+
           // 🧹 CLEAR OLD CART
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clear-cart/${session_id}`, {
-            method: "DELETE",
-          });
+          const clearCartRes = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/clear-cart/${session_id}`,
+              {
+                method: "DELETE",
+              }
+            );
+
+            console.log("CLEAR CART STATUS:", clearCartRes.status);
+
+            const clearCartData = await clearCartRes.json();
+
+            console.log("CLEAR CART RESPONSE:", clearCartData);
+
+            if (!clearCartRes.ok) {
+              throw new Error("Failed to clear cart");
+            }
 
           // 🧶 SEND ITEMS TO BACKEND
           for (let item of items) {
@@ -125,22 +142,35 @@ export default function Checkout() {
 
             const product_id = Number(item.id);
 
-console.log("PRODUCT ID:", product_id);
+            console.log("PRODUCT ID:", product_id);
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
-              method: "POST",
+            const cartRes = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/cart`,
+              {
+                method: "POST",
 
-              headers: {
-                "Content-Type": "application/json",
-              },
+                headers: {
+                  "Content-Type": "application/json",
+                },
 
-              body: JSON.stringify({
-                session_id,
-                product_id,
-                quantity: item.quantity,
-                color: item.color,
-              }),
-            });
+                body: JSON.stringify({
+                  session_id,
+                  product_id,
+                  quantity: item.quantity,
+                  color: item.color,
+                }),
+              }
+            );
+
+            console.log("ADD CART STATUS:", cartRes.status);
+
+            const cartData = await cartRes.json();
+
+            console.log("ADD CART RESPONSE:", cartData);
+
+            if (!cartRes.ok) {
+              throw new Error("Failed to add item to cart");
+            }
           }
 
           // 📦 PLACE ORDER
@@ -152,10 +182,23 @@ console.log("PRODUCT ID:", product_id);
           formData.append("phone", phone);
           formData.append("address", address);
 
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/place-order`, {
-            method: "POST",
-            body: formData,
-          });
+          const placeOrderRes = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/place-order`,
+              {
+                method: "POST",
+                body: formData,
+              }
+            );
+
+            console.log("PLACE ORDER STATUS:", placeOrderRes.status);
+
+            const placeOrderData = await placeOrderRes.json();
+
+            console.log("PLACE ORDER RESPONSE:", placeOrderData);
+
+            if (!placeOrderRes.ok) {
+              throw new Error("Order placement failed");
+            }
 
           clearCart();
 
