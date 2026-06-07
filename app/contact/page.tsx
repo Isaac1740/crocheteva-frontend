@@ -64,7 +64,7 @@ export default function Contact() {
               <Camera className="w-5 h-5" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-1">Instagram</h3>
-            <p className="text-sm text-gray-500">@hello.eva.crochet</p>
+            <p className="text-sm text-gray-500">@eva's_crochet</p>
           </motion.a>
 
           <motion.div 

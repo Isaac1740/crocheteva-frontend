@@ -38,14 +38,14 @@ export default function Footer() {
           <div>
             <h4 className="font-medium mb-4 text-sm uppercase tracking-wider">Connect</h4>
             <div className="space-y-3 text-sm opacity-80">
-              <a href="mailto:hello@evascrochet.com" className="flex items-center gap-2 hover:text-brand-900 transition-colors">
-                <Mail className="w-4 h-4" /> hello@evascrochet.com
+              <a href="mailto:hello.evas.crochet26@gmail.com" className="flex items-center gap-2 hover:text-brand-900 transition-colors">
+                <Mail className="w-4 h-4" /> hello.evas.crochet26@gmail.com
               </a>
               <p className="flex items-center gap-2">
                 <Phone className="w-4 h-4" /> (+91)94900 52096
               </p>
               <a href="#" className="flex items-center gap-2 hover:text-brand-900 transition-colors pt-2">
-                <Camera className="w-5 h-5" /> @evascrochet
+                <Camera className="w-5 h-5" /> @eva's_crochet (Instagram)
               </a>
             </div>
           </div>
