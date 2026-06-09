@@ -11,6 +11,8 @@ export default function Checkout() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -46,7 +48,12 @@ export default function Checkout() {
   const handlePlaceOrder = async () => {
     try {
 
-      const session_id = "abc123";
+      let session_id = localStorage.getItem("session_id");
+
+        if (!session_id) {
+          session_id = crypto.randomUUID();
+          localStorage.setItem("session_id", session_id);
+        }
 
       // 💰 CREATE RAZORPAY ORDER
       const orderRes = await fetch(
@@ -116,62 +123,33 @@ export default function Checkout() {
           }
 
           console.log("PAYMENT VERIFIED");
+          setIsProcessing(true);
 
-          // 🧹 CLEAR OLD CART
-          const clearCartRes = await fetch(
-              `${process.env.NEXT_PUBLIC_API_URL}/clear-cart/${session_id}`,
-              {
-                method: "DELETE",
-              }
-            );
-
-            console.log("CLEAR CART STATUS:", clearCartRes.status);
-
-            const clearCartData = await clearCartRes.json();
-
-            console.log("CLEAR CART RESPONSE:", clearCartData);
-
-            if (!clearCartRes.ok) {
-              throw new Error("Failed to clear cart");
-            }
-
-          // 🧶 SEND ITEMS TO BACKEND
           for (let item of items) {
-
-            console.log("ITEM ID:", item.id);
 
             const product_id = Number(item.id);
 
-            console.log("PRODUCT ID:", product_id);
-
             const cartRes = await fetch(
-              `${process.env.NEXT_PUBLIC_API_URL}/cart`,
-              {
-                method: "POST",
-
-                headers: {
-                  "Content-Type": "application/json",
-                },
-
-                body: JSON.stringify({
-                  session_id,
-                  product_id,
-                  quantity: item.quantity,
-                  color: item.color,
-                }),
-              }
-            );
-
-            console.log("ADD CART STATUS:", cartRes.status);
-
-            const cartData = await cartRes.json();
-
-            console.log("ADD CART RESPONSE:", cartData);
-
-            if (!cartRes.ok) {
-              throw new Error("Failed to add item to cart");
+            `${process.env.NEXT_PUBLIC_API_URL}/cart`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                session_id,
+                product_id,
+                quantity: item.quantity,
+                color: item.color,
+              }),
             }
+          );
+
+          console.log("ADD TO CART STATUS:", cartRes.status);
+          if (!cartRes.ok) {
+            throw new Error("Failed to add item to backend cart");
           }
+        }
 
           // 📦 PLACE ORDER
           const formData = new FormData();
@@ -199,8 +177,19 @@ export default function Checkout() {
             if (!placeOrderRes.ok) {
               throw new Error("Order placement failed");
             }
+            
+            // NOW clear backend cart
+            await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/clear-cart/${session_id}`,
+              {
+                method: "DELETE",
+              }
+            );
+
+
 
           clearCart();
+          setIsProcessing(false);
 
           setIsSubmitted(true);
         },
@@ -230,6 +219,23 @@ export default function Checkout() {
       alert("Payment failed");
     }
   };
+
+  if (isProcessing) {
+  return (
+    <div className="flex-1 w-full pt-24 pb-16 flex items-center justify-center min-h-[70vh]">
+      <div className="glass-card rounded-3xl p-12 text-center">
+        <h2 className="text-2xl font-semibold">
+          Confirming your order...
+        </h2>
+
+        <p className="text-gray-600 mt-2">
+          Payment received successfully.
+          Please do not close this page.
+        </p>
+      </div>
+    </div>
+  );
+}
 
   // ✅ SUCCESS SCREEN
   if (isSubmitted) {
