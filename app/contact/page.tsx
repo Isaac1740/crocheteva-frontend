@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, Camera, MapPin } from "lucide-react";
+import { Mail, Phone, Camera, MapPin, MessageCircle } from "lucide-react";
+import { FaInstagram,FaPinterest } from "react-icons/fa";
 
 export default function Contact() {
   return (
@@ -53,32 +54,47 @@ export default function Contact() {
             <p className="text-sm text-gray-500">(+91)94900 52096</p>
           </motion.div>
 
-          <motion.a 
-            href="#"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="glass-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300"
-          >
-            <div className="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Camera className="w-5 h-5" />
-            </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-1">Instagram</h3>
-            <p className="text-sm text-gray-500">@eva's_crochet</p>
-          </motion.a>
+          <motion.a
+              href="https://www.instagram.com/crochet_by_evaa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="glass-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <FaInstagram className="w-5 h-5" />
+              </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="glass-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300"
-          >
-            <div className="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              
-            </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-1">Feedback</h3>
-            <p className="text-sm text-gray-500">Please drop a feedback in any of our social media platforms</p>
-          </motion.div>
+              <h3 className="text-lg font-medium text-gray-900 mb-1">Instagram</h3>
+
+              <p className="text-sm text-gray-500 group-hover:text-brand-900 transition-colors">
+                @crochet_by_evaa
+              </p>
+            </motion.a>
+
+          <motion.a
+              href="https://in.pinterest.com/helloevascrochet26/"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="glass-card rounded-2xl p-8 flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <FaPinterest className="w-5 h-5" />
+              </div>
+
+              <h3 className="text-lg font-medium text-gray-900 mb-1">Pinterest</h3>
+
+              <p className="text-sm text-gray-500">
+                <span className="group-hover:text-brand-900 transition-colors">
+                  @helloevascrochet26
+                </span>
+              </p>
+            </motion.a>
         </div>
       </div>
     </div>

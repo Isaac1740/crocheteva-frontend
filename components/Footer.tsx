@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Camera, Mail, Phone } from "lucide-react";
+import { Camera, Mail, MessageCircle, Phone } from "lucide-react";
+import { FaInstagram } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -44,8 +45,13 @@ export default function Footer() {
               <p className="flex items-center gap-2">
                 <Phone className="w-4 h-4" /> (+91)94900 52096
               </p>
-              <a href="#" className="flex items-center gap-2 hover:text-brand-900 transition-colors pt-2">
-                <Camera className="w-5 h-5" /> @eva's_crochet (Instagram)
+              <a
+                href="https://www.instagram.com/crochet_by_evaa/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-brand-900 transition-colors pt-2"
+              >
+                <FaInstagram className="w-5 h-5" /> @crochet_by_evaa (Instagram)
               </a>
             </div>
           </div>
